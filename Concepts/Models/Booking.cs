@@ -2,6 +2,7 @@ using System;
 
 namespace Concepts.Models
 {
+    // Enums in CSharp: https://stackoverflow.com/q/22335103
     // public enum RoomType { Individual, Double, Junior, Suite }
     public class Booking
     {

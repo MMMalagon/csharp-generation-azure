@@ -144,7 +144,8 @@ namespace Demo
             set { this.age = value; }
         }
 
-        // No need to declare local var with short get; set; syntax (property)
+        // No need to declare local var with short get; set; syntax (auto-implemented properties)
+        // https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties
         // Permission modifiers can also be applied (Eg: get is public but not set, which can only be done inside class)
         public string Course { get; private set; }
 
@@ -155,10 +156,11 @@ namespace Demo
             get => $"{this.name} {this.surname}";
         }
 
-        // Another way (way shorter, btw)
+        // Another way (way shorter, btw) | https://stackoverflow.com/q/40282424
         // public string FullName => $"{this.name} {this.surname}";
 
         // Even with functions!
+        // https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
         // public bool Status => EvaluateStatus();
 
         // Write-only properties are also possible
@@ -166,6 +168,7 @@ namespace Demo
 
         // Constructors (there are several other ways, even using a Builder pattern, which is better when using default vars, I guess)
         // Method overloading, btw (this is declaring methods using the same name but changing params both types and amount)
+        // https://stackoverflow.com/q/4009013 | https://stackoverflow.com/q/48205792 | https://stackoverflow.com/q/6724133
         public Student() : this(string.Empty, string.Empty, 0) { }
 
         public Student(string name, int age) : this(name, string.Empty, age) { }

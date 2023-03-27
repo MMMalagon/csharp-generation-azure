@@ -209,7 +209,7 @@ namespace Concepts
             byte.TryParse(num3, out num1);
 
             int.TryParse(num3, out int num4);
-            var num5 = int.TryParse(num3, out _);  // https://stackoverflow.com/questions/48801040/out-var-and-out-difference
+            var num5 = int.TryParse(num3, out _);  // https://stackoverflow.com/q/48801040
 
             Console.WriteLine("A: {0} - B: {1}", num1, num2);
 
@@ -543,6 +543,7 @@ namespace Concepts
             Console.WriteLine("*  3. Null-able numeric variables".PadRight(79) + "*");
             Console.WriteLine("*  4. Control statements. Selection statements (IF, ELSE, SWITCH, CASE)".PadRight(79) + "*");
             Console.WriteLine("*  5. Control statements. Iteration statements (DO, FOR, FOREACH, WHILE)".PadRight(79) + "*");
+            // Console.WriteLine("*  6. Control statements. Jump statements (BREAK, CONTINUE, RETURN, GOTO)".PadRight(79) + "*");
             Console.WriteLine("*".PadRight(79) + "*");
             Console.WriteLine("*  0. Exit".PadRight(79) + "*");
             Console.WriteLine("*".PadRight(79) + "*");
