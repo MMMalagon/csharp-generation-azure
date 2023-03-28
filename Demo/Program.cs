@@ -79,19 +79,24 @@ namespace Demo
 
             int[] array3a = new int[] { 1, 2, 3 };
             int[] array3b = { 1, 2, 3 };
-            
+
             int[,] array4a = new int[2, 5];  // bidimensional (2 by 5)
             array4a[0, 0] = 0;
             array4a[0, 1] = 1;
             array4a[1, 4] = 5;
 
             int[,] array4b = { { 1, 62 }, { 2, 89 }, { 55, 0 }, { 789, -3 }, { -984, 6541 } };  // bidimensional (5 by 2)
-            Console.WriteLine(array4b[2,1]);  // prints: 0 ↵
+            Console.WriteLine(array4b[2, 1]);  // prints: 0 ↵
 
-            int[][] array5 = new int[5][];
+            int[][] array5 = new int[5][];  // Jagged array (arrays of arrays, allowing rows with different lengths)
+            // int[][] array5 = new int[5][5];  // Compilation error (could be cool, tbh, but that would be a bidimensional array)
             array5[0] = new int[] { 561, 56, 33 };
             array5[0] = new int[] { 1, 2, 3, 4, 5, 6 };
             array5[0] = new int[] { 5461, 946125 };
+
+            // We can scale this with multiple dimensions, both traditional multidimensional matrixes and jagged arrays
+            // int [,,] tripleArray = new int[3, 2, 4];
+            // int[][][] tripleJaggedArray = new int[3][][];
 
             var student = new Student();
 
@@ -100,6 +105,7 @@ namespace Demo
             students1[1].Name = "Ana";
             students1[2].Name = "María";
 
+            // Using the same student object multiple times, so its the same Name
             Console.WriteLine(students1[0].Name);
             Console.WriteLine(students1[1].Name);
             Console.WriteLine(students1[2].Name);
@@ -109,6 +115,7 @@ namespace Demo
             students2[1].Name = "Ana";
             students2[2].Name = "María";
 
+            // Declaring and assigning the proper way (different students)
             Console.WriteLine(students2[0].Name);
             Console.WriteLine(students2[1].Name);
             Console.WriteLine(students2[2].Name);
