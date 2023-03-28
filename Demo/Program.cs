@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Demo
 {
     public class Program
     {
+        /*
         public static void Main(string[] args)
         {
             var student = new Student()
@@ -49,7 +52,67 @@ namespace Demo
 
             Environment.Exit(0);
         }
+        */
 
+        public static void Main(string[] args)
+        {
+            ArraysDemo();
+            CollectionsDemo();
+        }
+
+        public static void CollectionsDemo()
+        {
+            ArrayList array = new ArrayList();  // Object list
+            Hashtable ht = new Hashtable();  // Object: Object dictionary (key: value)
+            // var ht = new Hashtable();
+
+            List<Student> students = new List<Student>();
+            List<object> list = new List<object>();  // Strongly-typed list | Worse performance than ArrayList
+            Dictionary<int, string> dic = new Dictionary<int, string>();
+        }
+
+        public static void ArraysDemo()
+        {
+            int[] array1 = new int[5];
+
+            Student[] array2 = new Student[5];
+
+            int[] array3a = new int[] { 1, 2, 3 };
+            int[] array3b = { 1, 2, 3 };
+            
+            int[,] array4a = new int[2, 5];  // bidimensional (2 by 5)
+            array4a[0, 0] = 0;
+            array4a[0, 1] = 1;
+            array4a[1, 4] = 5;
+
+            int[,] array4b = { { 1, 62 }, { 2, 89 }, { 55, 0 }, { 789, -3 }, { -984, 6541 } };  // bidimensional (5 by 2)
+            Console.WriteLine(array4b[2,1]);  // prints: 0 ↵
+
+            int[][] array5 = new int[5][];
+            array5[0] = new int[] { 561, 56, 33 };
+            array5[0] = new int[] { 1, 2, 3, 4, 5, 6 };
+            array5[0] = new int[] { 5461, 946125 };
+
+            var student = new Student();
+
+            Student[] students1 = new Student[] { student, student, student };
+            students1[0].Name = "Borja";
+            students1[1].Name = "Ana";
+            students1[2].Name = "María";
+
+            Console.WriteLine(students1[0].Name);
+            Console.WriteLine(students1[1].Name);
+            Console.WriteLine(students1[2].Name);
+
+            Student[] students2 = new Student[] { new Student(), new Student(), new Student() };
+            students2[0].Name = "Borja";
+            students2[1].Name = "Ana";
+            students2[2].Name = "María";
+
+            Console.WriteLine(students2[0].Name);
+            Console.WriteLine(students2[1].Name);
+            Console.WriteLine(students2[2].Name);
+        }
     }
 
     public struct PersonStruct
