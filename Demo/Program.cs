@@ -89,7 +89,7 @@ namespace Demo
             // Remove elements from Hashtable
             dict.Remove(1);  // given a key
 
-            foreach (var key in dict.Keys)  // object? (doubt, review 03/29 lesson @ 12:30 p.m.)
+            foreach (var key in dict.Keys)
             {
                 Console.WriteLine($"{key} : {dict[key]}");
             }
@@ -155,7 +155,7 @@ namespace Demo
             ht.Add("RBPT", "Red Bull Powertrains");  // it's race week!
 
             // Modify value given a key
-            dict[123] = "Manuel Martín";
+            ht[123] = "Manuel Martín";
             
             // Lenght
             Console.WriteLine(ht.Count);
@@ -187,17 +187,19 @@ namespace Demo
             array.AddRange(rgbColors);  // add rgbColors elements to array
 
             // Insert element given an index
-            array.Insert(4, "white");
+            array.Insert(4, "white");  // Max index is current length, if not, watch below ↴
+            // array.Insert(420, "happy day");  // Runtime exception because index bigger than length
 
             // ArrayList lenght
             Console.WriteLine($"Number of elements: {array.Count}");
 
             // Remove elements from ArrayList
             array.Remove("yellow");  // Remove matching element
-            array.RemoveAt(4);  // Remove position element (index)
-            array.RemoveRange(2, 2);  // RemoveRange(a, b) => Remove "b" (count) elements starting from "a" (index)
+            array.RemoveAt(0);  // Remove position element (index)
+            array.RemoveRange(1, 2);  // RemoveRange(a, b) => Remove "b" (count) elements starting from "a" (index)
 
-            // Sort array ¿alphabetically?
+            // Sort array ¿alphabetically? (var types must implement IComparable and custom IComparer if types are different)
+            // (read-only arraylists not allowed)
             array.Sort();
 
             // Reverse array (last to first and first to last, you know)
@@ -206,7 +208,7 @@ namespace Demo
             // Convert from ArrayList to Array | object -> object[] array = new array[10]
             var newArray = array.ToArray();  // from ArrayList to Array
 
-            foreach (var item in array)
+            foreach (var item in array)  // object?
             {
                 Console.WriteLine($"Item type: {item.GetType().ToString()}");
             }
@@ -261,7 +263,7 @@ namespace Demo
 
             // Add new elements (with resize)
             string[] fruits = new string[] { "orange", "lemon", "grapefruit", "lime" };
-            Array.Resize(ref fruits, 5);
+            Array.Resize(ref fruits, 5);  // https://stackoverflow.com/a/4840817 | 2023-03-29.png
             fruits[4] = "apple";
 
             // Get number of elements (lenght)
