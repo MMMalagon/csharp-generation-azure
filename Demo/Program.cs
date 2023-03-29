@@ -89,7 +89,7 @@ namespace Demo
             // Remove elements from Hashtable
             dict.Remove(1);  // given a key
 
-            foreach (var key in dict.Keys)
+            foreach (var key in dict.Keys)  // object? (doubt, review 03/29 lesson @ 12:30 p.m.)
             {
                 Console.WriteLine($"{key} : {dict[key]}");
             }
