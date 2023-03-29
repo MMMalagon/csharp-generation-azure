@@ -98,6 +98,33 @@ namespace Demo
             // int [,,] tripleArray = new int[3, 2, 4];
             // int[][][] tripleJaggedArray = new int[3][][];
 
+            // Delete every element of the array
+            int[] numbers = new int[] { 15, -3, 577, 82, 19, 33, 78, 1000, -63 };
+            Array.Clear(numbers, 0, numbers.Length);
+
+            // Add new elements (with resize)
+            string[] fruits = new string[] { "orange", "lemon", "grapefruit", "lime" };
+            Array.Resize(ref fruits, 5);
+            fruits[4] = "apple";
+
+            // Get number of elements (lenght)
+            Console.WriteLine($"Items lenght: {fruits.Length}");
+
+            // Loop through collection
+            // Option 1: foreach
+            foreach (var item in fruits)
+            {
+                Console.WriteLine("Item: {0}", item);
+            }
+            Console.WriteLine(Environment.NewLine);
+
+            // Loop through collection
+            // Option 2: for
+            for (var i = 0; i < fruits.Length; i++)
+            {
+                Console.WriteLine("Item: {0}", fruits[i]);
+            }
+
             var student = new Student();
 
             Student[] students1 = new Student[] { student, student, student };
