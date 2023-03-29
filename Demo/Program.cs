@@ -56,8 +56,165 @@ namespace Demo
 
         public static void Main(string[] args)
         {
-            ArraysDemo();
-            CollectionsDemo();
+            // ArraysDemo();
+            // CollectionsDemo();
+            ArrayListDemo();
+            HashtableDemo();
+            ListDemo();
+            DictDemo();
+        }
+
+        public static void DictDemo()
+        {
+            // Instantiate
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+
+            Dictionary<int, string> dict2 = new();
+            var dict3 = new Dictionary<int, string>();
+
+            // Clean-up (remove all elements)
+            dict.Clear();
+
+            // Add elements (key, value)
+            dict.Add(1, "Test");
+            dict.Add(123, "Manuel Martin");
+            dict.Add(33, "AMR23");  // it's race week!
+
+            // Modify value given a key
+            dict[123] = "Manuel Martín";
+
+            // Lenght
+            Console.WriteLine(dict.Count);
+
+            // Remove elements from Hashtable
+            dict.Remove(1);  // given a key
+
+            foreach (var key in dict.Keys)
+            {
+                Console.WriteLine($"{key} : {dict[key]}");
+            }
+        }
+
+        public static void ListDemo()
+        {
+            // Instantiate
+            List<string> list = new List<string>();
+            List<string> list1 = new();
+            var list2 = new List<string>();
+
+            // Clean-up
+            list.Clear();
+
+            // Add elements
+            list.Add("red");
+            list.Add("green");
+            list.Add("yellow");
+            list.Add((string)null);
+            list.Add("cyan");
+            list.Add("blue");
+
+            // Insert given an index
+            list.Insert(0, "white");
+
+            // Remove elements
+            list.Remove("white");  // matching
+            list.RemoveAt(2);  // index
+            list.RemoveRange(2, 2);
+
+            // Check if contains element
+            Console.WriteLine($"Does red exist? {list.Contains("red")}");
+
+            // Sort ¿aphabetically?
+            list.Sort();
+
+            // Inverse order (last to first and first to last, you know)
+            list.Reverse();
+
+            foreach (var item in list)
+            {
+                Console.WriteLine($"#{list.IndexOf(item)} - {item}");
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"#{i} - {list[i]}");
+            }
+        }
+
+        public static void HashtableDemo()
+        {
+            // Instantiate
+            var ht = new Hashtable();
+
+            // Clean-up (remove all elements)
+            ht.Clear();
+
+            // Add elements (key, value)
+            ht.Add(1, 2);
+            ht.Add(123, "Manuel Martin");
+            ht.Add("RBPT", "Red Bull Powertrains");  // it's race week!
+
+            // Modify value given a key
+            dict[123] = "Manuel Martín";
+            
+            // Lenght
+            Console.WriteLine(ht.Count);
+
+            // Remove elements from Hashtable
+            ht.Remove(1);  // given a key
+
+            foreach (var key in ht.Keys)
+            {
+                Console.WriteLine($"{key} : {ht[key]}");
+            }
+        }
+
+        public static void ArrayListDemo()
+        {
+            // Instantiate
+            ArrayList array = new ArrayList();
+
+            // Clean-up (remove all elements)
+            array.Clear();
+
+            // Add elements
+            array.Add(1);
+            array.Add("Manuel");
+            array.Add(new { Name = "Manuel", Surname = "Martín" });  // anonymous type | https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types
+            array.Add(new Student());
+
+            var rgbColors = new string[] { "red", "blue", "green", "yellow" };
+            array.AddRange(rgbColors);  // add rgbColors elements to array
+
+            // Insert element given an index
+            array.Insert(4, "white");
+
+            // ArrayList lenght
+            Console.WriteLine($"Number of elements: {array.Count}");
+
+            // Remove elements from ArrayList
+            array.Remove("yellow");  // Remove matching element
+            array.RemoveAt(4);  // Remove position element (index)
+            array.RemoveRange(2, 2);  // RemoveRange(a, b) => Remove "b" (count) elements starting from "a" (index)
+
+            // Sort array ¿alphabetically?
+            array.Sort();
+
+            // Reverse array (last to first and first to last, you know)
+            array.Reverse();
+
+            // Convert from ArrayList to Array | object -> object[] array = new array[10]
+            var newArray = array.ToArray();  // from ArrayList to Array
+
+            foreach (var item in array)
+            {
+                Console.WriteLine($"Item type: {item.GetType().ToString()}");
+            }
+
+            for (var i = 0; i < array.Count; i++)
+            {
+                Console.WriteLine($"{i} - Item type: {array[i].GetType().ToString()}");
+            }
         }
 
         public static void CollectionsDemo()
