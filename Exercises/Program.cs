@@ -8,7 +8,8 @@ namespace Exercises
         static void Main(string[] args)
         {
             Console.Clear();
-            BasicLinqQueries();
+            // BasicLinqQueries();
+            Exercises();
         }
 
         static void BasicLinqQueries()
@@ -189,6 +190,32 @@ namespace Exercises
             }
 
 
+            // T-SQL: SELECT TOP 1 * FROM dbo.ListaClientes WHERE Id = 4;
+
+            // Linq method:
+            var cliente1 = DataLists.ListaClientes
+                .FirstOrDefault();  // First() may throw an exception if nothing matches. This method defaults to null
+
+            // Linq expression
+            var cliente2 = (from r in DataLists.ListaClientes
+                            select r).FirstOrDefault();
+
+
+            // Pagination done on DBMS
+            var lista1 = DataLists.ListaProductos
+                .OrderBy(r => r.Descripcion)
+                .Skip(5)
+                .Take(5)
+                .Select(r => r);
+
+            // Pagination done on client
+            var lista2 = DataLists.ListaProductos
+                .OrderBy(r => r.Descripcion)
+                .Select(r => r)
+                .Skip(5)
+                .Take(5);
+
+
             // Count -> Count elements
             // Distinct -> Different values
             // Max -> Max value
@@ -208,6 +235,232 @@ namespace Exercises
             var r10c = (from r in DataLists.ListaProductos
                         where r.Precio < 0.90
                         select r).Count();  // I don't know why there's no count keyword, but ok
+        }
+
+        static void Exercises()
+        {
+            var now = DateTime.Now;
+            var date = DateTime.Now.AddDays(-30);
+
+            // var s1 = (now - date).TotalDays;
+            // var s2 = now.Subtract(date).TotalDays;
+
+            var r1 = now.Subtract(date);
+
+            // Clients list greater than 40 years old
+            var fortyYearsAgo = now.AddYears(-40);
+
+            var q1 = DataLists.ListaClientes
+                .Where(r => r.FechaNac < fortyYearsAgo)
+                .Select(r => r);
+
+            foreach (var item in q1)
+            {
+                Console.WriteLine($"#{item.Id} - {item.Nombre} - {item.FechaNac}");
+            }
+
+            Console.WriteLine(string.Empty);
+
+            // Products list which name starts by C ordered by price
+            var q2 = DataLists.ListaProductos
+                .Where(r => r.Descripcion.ToLower().StartsWith("c"))
+                .OrderBy(r => r.Precio)
+                .Select(r => r);
+
+            foreach (var item in q2)
+            {
+                Console.WriteLine($"#{item.Id} - {item.Descripcion} - {item.Precio} euros");
+            }
+
+            Console.WriteLine(string.Empty);
+
+            // Ask for order id and list content
+            Console.Write("Insert OrderId: ");
+            int.TryParse(Console.ReadLine(), out var orderId);
+
+            /*
+            var q3 = DataLists.ListaLineasPedido
+                .Where(o => o.IdPedido.Equals(orderId))
+                .Join(DataLists.ListaProductos,
+                    o => o.IdPedido,
+                    p => p.Id,
+                    (o, p) => new {  })
+                .Select(r => r);
+            */
+
+            var q3 = from lp in DataLists.ListaLineasPedido
+                     where lp.IdPedido == orderId
+                     join p in DataLists.ListaProductos on lp.IdProducto equals p.Id
+                     select new
+                     {
+                         Id = lp.IdPedido,
+                         IdProducto = lp.IdProducto,
+                         Descripcion = p.Descripcion,
+                         Precio = p.Precio,
+                         Cantidad = lp.Cantidad,
+                         Subtotal = p.Precio * lp.Cantidad
+                     };
+
+            var q3b = DataLists.ListaLineasPedido
+                .Where(r => r.IdPedido == orderId)
+                .Select(r => new
+                {
+                    IdProducto = r.IdProducto,
+                    Descripcion = DataLists.ListaProductos
+                        .Where(s => s.Id == r.IdProducto)
+                        .Select(s => s.Descripcion)
+                        .FirstOrDefault(),
+                    Precio = DataLists.ListaProductos
+                        .Where(s => s.Id == r.IdProducto)
+                        .Select(s => s.Precio)
+                        .FirstOrDefault(),
+                    Cantidad = r.Cantidad
+                    // Subtotal missing ¿another sub-select? I prefer joining
+                });
+
+            var q3c = from r in DataLists.ListaLineasPedido
+                      where r.IdPedido == orderId
+                      select new
+                      {
+                          r.IdProducto,
+                          Descripcion = (from s in DataLists.ListaProductos
+                                         where s.Id == r.IdProducto
+                                         select s.Descripcion).FirstOrDefault(),
+                          Precio = (from s in DataLists.ListaProductos
+                                    where s.Id == r.IdProducto
+                                    select s.Precio).FirstOrDefault(),
+                          r.Cantidad
+                      };
+
+            foreach (var item in q3)
+            {
+                Console.WriteLine($"Pedido #{item.Id} - Producto #{item.IdProducto} - {item.Descripcion} - {item.Cantidad} x {item.Precio} = {item.Subtotal}");
+            }
+
+            Console.WriteLine(string.Empty);
+
+            // Ask for order id and print total
+            Console.Write("Insert OrderId: ");
+            int.TryParse(Console.ReadLine(), out orderId);
+
+            var q4 = (from lp in DataLists.ListaLineasPedido
+                      where lp.IdPedido == orderId
+                      join p in DataLists.ListaProductos on lp.IdProducto equals p.Id
+                      select p.Precio * lp.Cantidad).Sum();
+
+
+            var q4b = DataLists.ListaLineasPedido
+                .Where(lp => lp.IdPedido == orderId)
+                .Sum(lp => lp.Cantidad * DataLists.ListaProductos
+                    .Where(s => s.Id == lp.IdProducto)
+                    .Select(s => s.Precio)
+                    .FirstOrDefault());
+
+
+            Console.WriteLine($"Pedido #{orderId} - Total: {q4} euros");
+
+            Console.WriteLine(string.Empty);
+
+            // Orders list that contains "lapicero" (supposedly id #11)
+            /*
+            var q5 = from p in DataLists.ListaProductos
+                     where p.Descripcion.ToLower().Contains("lapicero")
+                     join lp in DataLists.ListaLineasPedido on p.Id equals lp.IdProducto
+                     join o in DataLists.ListaPedidos on lp.IdPedido equals o.Id
+                     select new
+                     {
+                         Id = o.Id,
+                         FechaPedido = o.FechaPedido,
+                         Cantidad = lp.Cantidad
+                     };
+            */
+            var q5 = from o in DataLists.ListaPedidos
+                     join lp in DataLists.ListaLineasPedido on o.Id equals lp.IdPedido
+                     join p in DataLists.ListaProductos on lp.IdPedido equals p.Id
+                     where p.Descripcion.ToLower().Contains("lapicero")
+                     select new
+                     {
+                         Id = o.Id,
+                         FechaPedido = o.FechaPedido,
+                         Cantidad = lp.Cantidad
+                     };
+
+            Console.WriteLine("Pedidos que contienen \"lapicero\":");
+            foreach (var item in q5)
+            {
+                Console.WriteLine($"Pedido #{item.Id} - Fecha: {item.FechaPedido} - Cantidad: {item.Cantidad}");
+            }
+
+            Console.WriteLine(string.Empty);
+
+            // Amount (count) of orders that contains "cuaderno grande"
+            /*
+            var q6 = (from p in DataLists.ListaProductos
+                      where p.Descripcion.ToLower().Contains("cuaderno grande")
+                      join lp in DataLists.ListaLineasPedido on p.Id equals lp.IdProducto
+                      select lp.IdPedido).Distinct().Sum();
+            */
+
+            var q6 = (from lp in DataLists.ListaLineasPedido
+                      join p in DataLists.ListaProductos on lp.IdProducto equals p.Id
+                      where p.Descripcion.ToLower().Contains("cuaderno grande")
+                      select lp.IdPedido).Distinct().Sum();
+
+            Console.WriteLine($"Total de pedidos que contienen \"cuaderno grande\": {q6}");
+
+            Console.WriteLine(string.Empty);
+
+            // Total units sold of "cuaderno pequeño"
+            /*
+            var q7 = (from p in DataLists.ListaProductos
+                      where p.Descripcion.ToLower().Contains("cuaderno pequeño")
+                      join lp in DataLists.ListaLineasPedido on p.Id equals lp.IdProducto
+                      select lp.Cantidad).Sum();
+            */
+
+            var q7 = (from lp in DataLists.ListaLineasPedido
+                      join p in DataLists.ListaProductos on lp.IdProducto equals p.Id
+                      where p.Descripcion.ToLower().Contains("cuaderno pequeño")
+                      select lp.Cantidad).Sum();
+
+            Console.WriteLine($"Total de pedidos que contienen \"cuaderno pequeño\": {q7}");
+
+            Console.WriteLine(string.Empty);
+
+            // Order with the biggest amount of items/products
+            var q8 = (from lp in DataLists.ListaLineasPedido
+                      group lp by lp.IdPedido into p
+                      orderby p.Sum(lp => lp.Cantidad) descending
+                      select new
+                      {
+                          IdPedido = p.Key,
+                          CantitadTotal = p.Sum(lp => lp.Cantidad)
+                      }).FirstOrDefault();  // .OrderByDescending(r => r.CantitadTotal).FirstOrDefault();
+
+            var q8b = DataLists.ListaLineasPedido
+                .GroupBy(lp => lp.IdPedido)
+                .Select(lp => new
+                {
+                    IdPedido = lp.Key,
+                    CantitadTotal = lp.Sum(lp => lp.Cantidad)
+                })
+                .OrderByDescending(lp => lp.CantitadTotal)
+                .FirstOrDefault();
+
+            Console.WriteLine($"Pedido con la mayor cantidad de items: #{q8.IdPedido} - Total items: {q8.CantitadTotal}");
+
+            Console.WriteLine(string.Empty);
+
+            // Orders list ordered by date
+            var q9 = from o in DataLists.ListaPedidos
+                     orderby o.FechaPedido descending
+                     select o;
+
+            foreach (var item in q9)
+            {
+                Console.WriteLine($"Pedido #{item.Id} - Fecha: {item.FechaPedido}");
+            }
+
         }
     }
 }
