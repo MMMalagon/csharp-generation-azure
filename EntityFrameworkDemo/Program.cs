@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.Options;
 
 namespace EntityFrameworkDemo
 {
@@ -37,7 +38,7 @@ namespace EntityFrameworkDemo
             var connectionString = config["NorthwindConnectionString"];
 
             QueriesWithADONET(connectionString);
-            QueriesWithEntityFramework();
+            QueriesWithEntityFramework(connectionString);
         }
 
         static void QueriesWithADONET(string connectionString)
@@ -108,10 +109,26 @@ namespace EntityFrameworkDemo
             connection.Dispose();
         }
     
-        static void QueriesWithEntityFramework()
+        static void QueriesWithEntityFramework(string connectionString)
         {
-            // Intantiate context class
-            var dbo = new NorthwindModel();
+            /*
+            var connectionString = Environment.GetEnvironmentVariable("MyConnectionString");
+            var optionsBuilder = new DbContextOptionsBuilder<MyDbContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            using (var context = new MyDbContext(optionsBuilder.Options))
+            {
+                // Use the context here
+            }
+            */
+
+            // Custom DbContextOptions(Builder)
+            // https://stackoverflow.com/a/38418080
+            var optionsBuilder = new DbContextOptionsBuilder<NorthwindModel>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            // Instantiate DbContext class with custom DbContext
+            var dbo = new NorthwindModel(optionsBuilder.Options);
 
 
             // SELECT * FROM dbo.Customers

@@ -7,19 +7,6 @@ namespace EntityFrameworkDemo.Model;
 
 public partial class NorthwindModel : DbContext
 {
-    private static readonly string _connectionString;
-    static NorthwindModel()
-    {
-        var config = new ConfigurationBuilder()
-            .AddUserSecrets<NorthwindModel>()
-            .Build();
-
-        _connectionString = config["NorthwindConnectionString"];
-    }
-    public NorthwindModel()
-    {
-    }
-
     public NorthwindModel(DbContextOptions<NorthwindModel> options)
         : base(options)
     {
@@ -78,10 +65,6 @@ public partial class NorthwindModel : DbContext
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<Territory> Territories { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer(_connectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
