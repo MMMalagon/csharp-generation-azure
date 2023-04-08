@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exercises", "Exercises\Exer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkDemo", "EntityFrameworkDemo\EntityFrameworkDemo.csproj", "{C34CD435-467E-4360-B0D7-0AC1F4D430D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationDemo", "WebApplicationDemo\WebApplicationDemo.csproj", "{9286CB8D-E403-45BA-898A-86855AFF4784}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationDemo", "WebApplicationDemo\WebApplicationDemo.csproj", "{9286CB8D-E403-45BA-898A-86855AFF4784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindExercises", "NorthwindExercises\NorthwindExercises.csproj", "{9740D5A3-741D-4CAB-A79C-F7A295AA1141}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9286CB8D-E403-45BA-898A-86855AFF4784}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9286CB8D-E403-45BA-898A-86855AFF4784}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9286CB8D-E403-45BA-898A-86855AFF4784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9740D5A3-741D-4CAB-A79C-F7A295AA1141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9740D5A3-741D-4CAB-A79C-F7A295AA1141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9740D5A3-741D-4CAB-A79C-F7A295AA1141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9740D5A3-741D-4CAB-A79C-F7A295AA1141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
