@@ -22,8 +22,16 @@ namespace WebApplicationDemo.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            /*
             var northwindModel = _context.Products.Include(p => p.Category).Include(p => p.Supplier);
             return View(await northwindModel.ToListAsync());
+            */
+            var products = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Supplier)
+                .ToListAsync();
+            
+            return View(products);
         }
 
         // GET: Products/Details/5
@@ -33,11 +41,17 @@ namespace WebApplicationDemo.Controllers
             {
                 return NotFound();
             }
-
+            /*
             var product = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
                 .FirstOrDefaultAsync(m => m.ProductID == id);
+            */
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Supplier)
+                .Where(m => m.ProductID == id)
+                .FirstOrDefaultAsync();
             if (product == null)
             {
                 return NotFound();
@@ -63,7 +77,8 @@ namespace WebApplicationDemo.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                // _context.Add(product);
+                _context.Products.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -80,7 +95,10 @@ namespace WebApplicationDemo.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            // var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products
+                .Where(c => c.ProductID == id)
+                .FirstOrDefaultAsync();
             if (product == null)
             {
                 return NotFound();
