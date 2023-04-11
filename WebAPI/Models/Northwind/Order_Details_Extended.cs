@@ -9,7 +9,7 @@ public partial class Order_Details_Extended
 
     public int ProductID { get; set; }
 
-    public string ProductName { get; set; } = null!;
+    public string ProductName { get; set; }
 
     public decimal UnitPrice { get; set; }
 

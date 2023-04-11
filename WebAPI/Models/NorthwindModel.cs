@@ -78,8 +78,12 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Alphabetical list of products");
 
-            entity.Property(e => e.CategoryName).HasMaxLength(15);
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(15);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.QuantityPerUnit).HasMaxLength(20);
             entity.Property(e => e.UnitPrice).HasColumnType("money");
         });
@@ -88,7 +92,9 @@ public partial class NorthwindModel : DbContext
         {
             entity.HasIndex(e => e.CategoryName, "CategoryName");
 
-            entity.Property(e => e.CategoryName).HasMaxLength(15);
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(15);
             entity.Property(e => e.Description).HasColumnType("ntext");
             entity.Property(e => e.Picture).HasColumnType("image");
         });
@@ -99,7 +105,9 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Category Sales for 1997");
 
-            entity.Property(e => e.CategoryName).HasMaxLength(15);
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(15);
             entity.Property(e => e.CategorySales).HasColumnType("money");
         });
 
@@ -110,7 +118,9 @@ public partial class NorthwindModel : DbContext
                 .ToView("Current Product List");
 
             entity.Property(e => e.ProductID).ValueGeneratedOnAdd();
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -128,7 +138,9 @@ public partial class NorthwindModel : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Address).HasMaxLength(60);
             entity.Property(e => e.City).HasMaxLength(15);
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ContactName).HasMaxLength(30);
             entity.Property(e => e.ContactTitle).HasMaxLength(30);
             entity.Property(e => e.Country).HasMaxLength(15);
@@ -178,9 +190,12 @@ public partial class NorthwindModel : DbContext
                 .ToView("Customer and Suppliers by City");
 
             entity.Property(e => e.City).HasMaxLength(15);
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ContactName).HasMaxLength(30);
             entity.Property(e => e.Relationship)
+                .IsRequired()
                 .HasMaxLength(9)
                 .IsUnicode(false);
         });
@@ -196,10 +211,14 @@ public partial class NorthwindModel : DbContext
             entity.Property(e => e.City).HasMaxLength(15);
             entity.Property(e => e.Country).HasMaxLength(15);
             entity.Property(e => e.Extension).HasMaxLength(4);
-            entity.Property(e => e.FirstName).HasMaxLength(10);
+            entity.Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(10);
             entity.Property(e => e.HireDate).HasColumnType("datetime");
             entity.Property(e => e.HomePhone).HasMaxLength(24);
-            entity.Property(e => e.LastName).HasMaxLength(20);
+            entity.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(20);
             entity.Property(e => e.Notes).HasColumnType("ntext");
             entity.Property(e => e.Photo).HasColumnType("image");
             entity.Property(e => e.PhotoPath).HasMaxLength(255);
@@ -243,15 +262,21 @@ public partial class NorthwindModel : DbContext
             entity.Property(e => e.CustomerID)
                 .HasMaxLength(5)
                 .IsFixedLength();
-            entity.Property(e => e.CustomerName).HasMaxLength(40);
+            entity.Property(e => e.CustomerName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ExtendedPrice).HasColumnType("money");
             entity.Property(e => e.Freight).HasColumnType("money");
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
             entity.Property(e => e.PostalCode).HasMaxLength(10);
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.Region).HasMaxLength(15);
             entity.Property(e => e.RequiredDate).HasColumnType("datetime");
-            entity.Property(e => e.Salesperson).HasMaxLength(31);
+            entity.Property(e => e.Salesperson)
+                .IsRequired()
+                .HasMaxLength(31);
             entity.Property(e => e.ShipAddress).HasMaxLength(60);
             entity.Property(e => e.ShipCity).HasMaxLength(15);
             entity.Property(e => e.ShipCountry).HasMaxLength(15);
@@ -259,7 +284,9 @@ public partial class NorthwindModel : DbContext
             entity.Property(e => e.ShipPostalCode).HasMaxLength(10);
             entity.Property(e => e.ShipRegion).HasMaxLength(15);
             entity.Property(e => e.ShippedDate).HasColumnType("datetime");
-            entity.Property(e => e.ShipperName).HasMaxLength(40);
+            entity.Property(e => e.ShipperName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.UnitPrice).HasColumnType("money");
         });
 
@@ -345,7 +372,9 @@ public partial class NorthwindModel : DbContext
                 .ToView("Order Details Extended");
 
             entity.Property(e => e.ExtendedPrice).HasColumnType("money");
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.UnitPrice).HasColumnType("money");
         });
 
@@ -366,7 +395,9 @@ public partial class NorthwindModel : DbContext
 
             entity.Property(e => e.Address).HasMaxLength(60);
             entity.Property(e => e.City).HasMaxLength(15);
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.Country).HasMaxLength(15);
             entity.Property(e => e.CustomerID)
                 .HasMaxLength(5)
@@ -397,7 +428,9 @@ public partial class NorthwindModel : DbContext
 
             entity.HasIndex(e => e.SupplierID, "SuppliersProducts");
 
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.QuantityPerUnit).HasMaxLength(20);
             entity.Property(e => e.ReorderLevel).HasDefaultValueSql("((0))");
             entity.Property(e => e.UnitPrice)
@@ -421,8 +454,12 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Product Sales for 1997");
 
-            entity.Property(e => e.CategoryName).HasMaxLength(15);
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(15);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ProductSales).HasColumnType("money");
         });
 
@@ -432,7 +469,9 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Products Above Average Price");
 
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.UnitPrice).HasColumnType("money");
         });
 
@@ -442,8 +481,12 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Products by Category");
 
-            entity.Property(e => e.CategoryName).HasMaxLength(15);
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(15);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.QuantityPerUnit).HasMaxLength(20);
         });
 
@@ -469,6 +512,7 @@ public partial class NorthwindModel : DbContext
 
             entity.Property(e => e.RegionID).ValueGeneratedNever();
             entity.Property(e => e.RegionDescription)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsFixedLength();
         });
@@ -479,7 +523,9 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Sales Totals by Amount");
 
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.SaleAmount).HasColumnType("money");
             entity.Property(e => e.ShippedDate).HasColumnType("datetime");
         });
@@ -490,14 +536,20 @@ public partial class NorthwindModel : DbContext
                 .HasNoKey()
                 .ToView("Sales by Category");
 
-            entity.Property(e => e.CategoryName).HasMaxLength(15);
-            entity.Property(e => e.ProductName).HasMaxLength(40);
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(15);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ProductSales).HasColumnType("money");
         });
 
         modelBuilder.Entity<Shipper>(entity =>
         {
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.Phone).HasMaxLength(24);
         });
 
@@ -529,7 +581,9 @@ public partial class NorthwindModel : DbContext
 
             entity.Property(e => e.Address).HasMaxLength(60);
             entity.Property(e => e.City).HasMaxLength(15);
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ContactName).HasMaxLength(30);
             entity.Property(e => e.ContactTitle).HasMaxLength(30);
             entity.Property(e => e.Country).HasMaxLength(15);
@@ -546,6 +600,7 @@ public partial class NorthwindModel : DbContext
 
             entity.Property(e => e.TerritoryID).HasMaxLength(20);
             entity.Property(e => e.TerritoryDescription)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsFixedLength();
 

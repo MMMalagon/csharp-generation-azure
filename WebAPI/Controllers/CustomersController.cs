@@ -25,10 +25,6 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-          if (_context.Customers == null)
-          {
-              return NotFound();
-          }
             return await _context.Customers.ToListAsync();
         }
 
@@ -36,10 +32,6 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
-          if (_context.Customers == null)
-          {
-              return NotFound();
-          }
             var customer = await _context.Customers.FindAsync(id);
 
             if (customer == null)
@@ -86,10 +78,6 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-          if (_context.Customers == null)
-          {
-              return Problem("Entity set 'NorthwindModel.Customers'  is null.");
-          }
             _context.Customers.Add(customer);
             try
             {
@@ -114,10 +102,6 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(string id)
         {
-            if (_context.Customers == null)
-            {
-                return NotFound();
-            }
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
@@ -132,7 +116,7 @@ namespace WebAPI.Controllers
 
         private bool CustomerExists(string id)
         {
-            return (_context.Customers?.Any(e => e.CustomerID == id)).GetValueOrDefault();
+            return _context.Customers.Any(e => e.CustomerID == id);
         }
     }
 }

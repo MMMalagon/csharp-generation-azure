@@ -5,11 +5,11 @@ namespace WebAPI.Models.Northwind;
 
 public partial class Products_by_Category
 {
-    public string CategoryName { get; set; } = null!;
+    public string CategoryName { get; set; }
 
-    public string ProductName { get; set; } = null!;
+    public string ProductName { get; set; }
 
-    public string? QuantityPerUnit { get; set; }
+    public string QuantityPerUnit { get; set; }
 
     public short? UnitsInStock { get; set; }
 
